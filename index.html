@@ -15,114 +15,268 @@
 <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
 
 <!-- NAVBAR -->
-<article x-data="slider" class="relative w-full flex flex-shrink-0 overflow-hidden shadow-2xl"> 
 <div class="flex flex-col items-center justify-center mt-32" x-cloak x-data="appData()" x-init="appInit()">
-    <div class="flex flex-col">
-        <!-- Page Scroll Progress -->
-        <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5
-            bg-blue-500" :style="`width: ${percent}%`"></div>
+   <div class="flex flex-col">
+       <!-- Page Scroll Progress -->
+       <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5
+           bg-blue-500" :style="`width: ${percent}%`"></div>
 
-        <!-- Navbar -->
-        <nav class="flex justify-around py-4 bg-white/80
-            backdrop-blur-md shadow-md w-full
-            fixed top-0 left-0 right-0 z-10">
+       <!-- Navbar -->
+       <nav class="flex justify-around py-4 bg-white/80
+           backdrop-blur-md shadow-md w-full
+           fixed top-0 left-0 right-0 z-10">
 
-            <!-- Logo -->
-            <div class="flex items-center">
-                <!-- Logo -->
-                <a class="cursor-pointer">
-                    <h3 class="text-2xl font-medium text-blue-500">
-                        <img class="h-10 object-cover"
-                            src="https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.svg" alt="Store Logo">
-                    </h3>
-                </a>
+           <!-- Logo -->
+           <div class="flex items-center">
+               <!-- Logo -->
+               <a class="cursor-pointer">
+                   <h3 class="text-2xl font-medium text-blue-500">
+                       <img class="h-10 object-cover"
+                           src="https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.svg" alt="Store Logo">
+                   </h3>
+               </a>
+           </div>
+
+           <!-- link para la seleccion -->
+           <div class="items-center hidden space-x-8 lg:flex">
+               <a class="flex text-gray-600 hover:text-blue-500
+                   cursor-pointer transition-colors duration-300">
+                   Inicio
+               </a>
+
+               <a class="flex text-gray-600 
+                   cursor-pointer transition-colors duration-300
+                   font-semibold text-blue-600">
+                   Servicios
+               </a>
+
+               <a class="flex text-gray-600 hover:text-blue-500
+                   cursor-pointer transition-colors duration-300">
+                   Especiales
+               </a>
+
+               <a class="flex text-gray-600 hover:text-blue-500
+                   cursor-pointer transition-colors duration-300">
+                   Reservas Online
+               </a>
+
+               <a class="flex text-gray-600 hover:text-blue-500
+                   cursor-pointer transition-colors duration-300">
+                   Contactanos
+               </a>
+
+           </div>
+
+           <!-- Icon Menu Section -->
+           <div class="flex items-center space-x-5">
+               <!-- Register -->
+               <div class="relative text-lg bg-transparent text-gray-800">
+                 <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+                  <input class="bg-transparent border-none mr-3 px-2 leading-tight focus:outline-none" type="text" placeholder="Search">
+                  <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
+                     <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
+                         <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"/>
+                     </svg>
+                  </button>
+                 </div>
+               </div>
+           </div>
+       </nav>
+   </div>
+
+   <!-- CARROUSEL -->
+   <article x-data="slider" class="relative w-full flex flex-shrink-0 overflow-hidden shadow-2xl"> 
+         <template x-for="(image, index) in images">
+            <figure class="h-96" x-show="currentIndex == index + 1" x-transition:enter="transition transform duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition transform duration-300" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0">
+            <img :src="image" alt="Image" class="absolute inset-0 z-10 h-full w-full object-cover opacity-70" />
+            </figure>
+         </template>
+   
+         <button @click="back()"
+            class="absolute left-14 top-1/2 -translate-y-1/2 w-11 h-11 flex justify-center items-center rounded-full shadow-md z-10 bg-gray-100 hover:bg-gray-200">
+            <svg class=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+               xmlns="http://www.w3.org/2000/svg">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7">
+               </path>
+            </svg>
+         </button>
+   
+         <button @click="next()"
+         class="absolute right-14 top-1/2 translate-y-1/2 w-11 h-11 flex justify-center items-center rounded-full shadow-md z-10 bg-gray-100 hover:bg-gray-200">
+            <svg class=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+            </svg>
+         </button>
+   </article>
+</div>
+<br>
+
+
+<!-- componente desplegable -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+ 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+      integrity="sha256-x8PYmLKD83R9T/sYmJn1j3is/chhJdySyhet/JuHnfY="
+      crossorigin="anonymous"
+    />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap");
+html,
+body {
+  font-family: "Rubik", sans-serif;
+  height: 100%;
+}
+
+.dropdown-menu[data-show] {
+  display: flex;
+}
+    </style>
+  
+  </head>
+
+  <body>
+    <div class="container">
+      <!------------------ LEVEL 1 ----------------------->
+      <div class="dropdown relative inline-flex cursor-pointer">
+        <!-- dropdown text -->
+        <span
+          class="dropdown-text flex px-4 py-3 rounded text-gray-800 items-center "
+          >Dropdown Level 1
+
+          <!-- icono de la flecha -->
+          <i
+            class="material-icons ml-2 h-4 w-4 text-2xl inline-flex items-center justify-center"
+            >keyboard_arrow_down</i
+          >
+        </span>
+        <!-- dropdown text -->
+        <!-- dropdown menu -->
+        <div class="dropdown-menu flex flex-col hidden absolute">
+          <div
+            class="rounded flex flex-col flex-grow divide-y divide-gray-200"
+          >
+            <div class="dropdown-item flex">
+              <a
+                href="#"
+                class="dropdown-link flex flex-grow px-4 py-3 text-gray-800 whitespace-no-wrap rounded hover:bg-gray-800 hover:text-white"
+                >Servicio 1</a
+              >
             </div>
-
-            <!-- link para la seleccion -->
-            <div class="items-center hidden space-x-8 lg:flex">
-                <a class="flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300">
-                    Inicio
-                </a>
-
-                <a class="flex text-gray-600 
-                    cursor-pointer transition-colors duration-300
-                    font-semibold text-blue-600">
-                    Servicios
-                </a>
-
-                <a class="flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300">
-                    Especiales
-                </a>
-
-                <a class="flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300">
-                    Reservas Online
-                </a>
-
-                <a class="flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300">
-                    Contactanos
-                </a>
-
+            <div class="dropdown-item flex">
+              <a
+                href="#"
+                class="dropdown-link flex flex-grow px-4 py-3 text-gray-800 whitespace-no-wrap rounded hover:bg-gray-800 hover:text-white"
+                >Servicio 2</a
+              >
             </div>
-
-            <!-- Icon Menu Section -->
-            <div class="flex items-center space-x-5">
-                <!-- Register -->
-                <div class="relative text-lg bg-transparent text-gray-800">
-                  <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
-                   <input class="bg-transparent border-none mr-3 px-2 leading-tight focus:outline-none" type="text" placeholder="Search">
-                   <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
-                      <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
-                          <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"/>
-                      </svg>
-                   </button>
+            <div class="dropdown-item">
+              <!------------------ LEVEL 2 ----------------------->
+              <div class="dropdown relative flex">
+                <!-- dropdown text -->
+                <span
+                  class="dropdown-text flex px-4 py-3 bg-gray-400 rounded text-gray-800 items-center hover:bg-gray-800 hover:text-white whitespace-no-wrap"
+                  >Dropdown Level 2
+                  <i
+                    class="material-icons ml-2 h-4 w-4 text-2xl inline-flex items-center justify-center"
+                    >keyboard_arrow_down</i
+                  >
+                </span>
+                <!-- dropdown text -->
+                <!-- dropdown menu -->
+                <div class="dropdown-menu flex flex-grow hidden absolute">
+                  <div
+                    class="rounded flex flex-col flex-grow bg-gray-400 divide-y divide-gray-200"
+                  >
+                    <div class="dropdown-item flex flex-grow">
+                      <a
+                        href="#"
+                        class="dropdown-link flex flex-grow px-4 py-3 text-gray-800 whitespace-no-wrap rounded hover:bg-gray-800 hover:text-white"
+                        >Level Two Link</a
+                      >
+                    </div>
+                    <div class="dropdown-item flex flex-grow">
+                      
+                    </div>
                   </div>
                 </div>
+                <!-- dropdown menu -->
+              </div>
+              <!------------------ LEVEL 2 ----------------------->
             </div>
-        </nav>
+          </div>
+        </div>
+        <!-- dropdown menu -->
+      </div>
+      <!------------------ LEVEL 1 ----------------------->
     </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.0/umd/popper.min.js"
+      integrity="sha256-FT/LokHAO3u6YAZv6/EKb7f2e0wXY3Ff/9Ww5NzT+Bk="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+  $(".dropdown").each(function (_, dropdown) {
+    const dropdownMenu = $(dropdown).find("> .dropdown-menu")[0];
+    let popperInstance = null;
 
+    function create() {
+      popperInstance = Popper.createPopper(dropdown, dropdownMenu, {
+        placement: "auto-start",
+        strategy: "absolute",
+        modifiers: [
+          {
+            name: "flip",
+            options: {
+              fallbackPlacements: ["top", "bottom", "left", "right"],
+            },
+          },
+        ],
+      });
+    }
+    function destroy() {
+      if (popperInstance) {
+        popperInstance.destroy();
+        popperInstance = null;
+      }
+    }
 
-    <!-- CARROUSEL -->
-    
-      <template x-for="(image, index) in images">
-          <figure class="h-96" x-show="currentIndex == index + 1" x-transition:enter="transition transform duration-300"
-          x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-          x-transition:leave="transition transform duration-300" x-transition:leave-start="opacity-100"
-          x-transition:leave-end="opacity-0">
-          <img :src="image" alt="Image" class="absolute inset-0 z-10 h-full w-full object-cover opacity-70" />
-          </figure>
-      </template>
-  
-      <button @click="back()"
-          class="absolute left-14 top-1/2 -translate-y-1/2 w-11 h-11 flex justify-center items-center rounded-full shadow-md z-10 bg-gray-100 hover:bg-gray-200">
-          <svg class=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7">
-              </path>
-          </svg>
-      </button>
-  
-      <button @click="next()"
-      class="absolute right-14 top-1/2 translate-y-1/2 w-11 h-11 flex justify-center items-center rounded-full shadow-md z-10 bg-gray-100 hover:bg-gray-200">
-          <svg class=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
-          </svg>
-      </button>
-  </article>
+    function show() {
+      $(dropdownMenu).attr("data-show", "");
+      create();
+    }
 
-</div>
+    function hide() {
+      $(dropdownMenu).removeAttr("data-show");
+      destroy();
+    }
 
-
-
+    $(dropdown).on("mouseenter focus", show);
+    $(dropdown).on("mouseleave blur", hide);
+  });
+});
+    </script>
+  </body>
+</html>
 
 
 <script>
-
    //navbar
    const appData = () => {
       return {
